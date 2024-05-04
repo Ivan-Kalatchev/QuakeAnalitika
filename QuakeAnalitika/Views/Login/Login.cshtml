@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    ViewData["Title"] = "Вход";
+}
+
+<v-container class="mt-5" fluid>
+    <v-row justify="center">
+        <v-col cols="12" sm="9" md="6" lg="4" xl="3">
+            <v-card elevation="0" outlined>
+                <v-card-title class="text-h5">Вход</v-card-title>
+
+                <v-card-text>
+
+                    <v-tooltip bottom open-delay="800">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field v-bind="attrs" v-on="on" @@keyup.enter="login" v-model="user" :disabled="isLoading" :loading="isLoading" label="Потребител" outlined clearable></v-text-field>
+                        </template>
+                        <span>Потребителско име</span>
+                    </v-tooltip>
+
+                    <v-tooltip bottom open-delay="800">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field v-bind="attrs" v-on="on" @@keyup.enter="login" v-model="password" :disabled="isLoading" :loading="isLoading" label="Парола" outlined type="Password" clearable></v-text-field>
+                        </template>
+                        <span>Парола</span>
+                    </v-tooltip>
+
+                </v-card-text>
+                <v-divider style="margin-top: -1.3rem;"></v-divider>
+                <v-card-actions>
+                    <v-tooltip bottom open-delay="800">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn v-bind="attrs" v-on="on" color="primary" block text :loading="isLoading" v-on:click="login()">Вход</v-btn>
+                        </template>
+                        <span>Вход</span>
+                    </v-tooltip>
+                </v-card-actions>
+            </v-card>
+        </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
+        <v-col cols="12" sm="9" md="6" lg="4" xl="3">
+            <v-divider></v-divider>
+            @{
+                var v = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            }
+            <p class="font-weight-regular body-2">@v.Major.@v.Minor.@v.Build.</p>
+        </v-col>
+    </v-row>
+    <v-dialog v-model="errDialog" max-width="600">
+        <v-card>
+            <v-card-title class="text-h5 error lighten-5">
+                Грешка!
+            </v-card-title>
+            <v-card-text class="mt-2">
+                {{errText}}
+            </v-card-text>
+
+            <v-divider style="margin-top: -1rem;"></v-divider>
+
+            <v-card-actions>
+                <v-col class="pa-0" cols="12">
+                    <v-btn color="error" text block @@click="errDialog = false;">
+                        Разбирам
+                    </v-btn>
+                </v-col>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</v-container>
+
+<input value="@Url.Action("Index", "Home")" id="homeUrl" style="display: none;" />
+<input value="@Url.Action("Login", "Login")" id="loginUrl" style="display: none;" />
+<input value="@(Environment.GetEnvironmentVariable("IsDev"))" id="isDev" style="display: none;" />
+
+@section Scripts {
+    <script src="~/js/login.js"></script>
+    <environment include="Development">
+        <script src="~/js/loginDev.js"></script>
+    </environment>
+}

@@ -1,0 +1,49 @@
+﻿@using System.Reflection;
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewData["Title"] = "MakeipTok";
+}
+
+<v-app-bar app color="white" flat>
+    <v-toolbar-title class="primary px-5 py-1 d-flex align-center" style="color: white; border-radius:.3rem; cursor: pointer;">
+        Пирин <v-chip color="white px-1" class="ml-2" style="margin-top:.15rem;cursor: pointer;"
+                      label x-small
+                      outlined>Сървър</v-chip>
+    </v-toolbar-title>
+</v-app-bar>
+
+<v-main class="d-flex align-center">
+    <v-container>
+        <v-row>
+            <v-col cols="12" md="4" class="d-flex align-center justify-center">
+                <div style="max-width: 30rem;">
+                    <h1 style="font-size: 74px;">QakeAnalitika</h1>
+                    <h2>Сървър</h2>
+                    <p style="font-size: 19px;" class="mt-2">
+                        lorem ipsum dolor sit emet.
+                    </p>
+                    <v-btn color="primary" elevation="0"
+                           rounded href="login"
+                           x-large>Вход</v-btn>
+                    <v-btn elevation="0"
+                           rounded href="login"
+                           large>Регистрация</v-btn>
+                    <v-btn elevation="0"
+                           rounded href="login"
+                           small>SWAGGER</v-btn>
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
+</v-main>
+
+<v-footer padless style="padding: 1rem 3rem 1rem 3rem;" app>
+    <v-spacer></v-spacer>
+    <a href="#">@($"{Assembly.GetEntryAssembly().GetName().Version.Major}.{Assembly.GetEntryAssembly().GetName().Version.Minor}.{Assembly.GetEntryAssembly().GetName().Version.Revision}")</a>
+</v-footer>
+
+@section Scripts {
+
+    <script src="~/js/index.js"></script>
+
+}
