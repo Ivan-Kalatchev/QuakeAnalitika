@@ -9,17 +9,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MakeupTok/MakeupTok.csproj", "MakeupTok/"]
-RUN dotnet restore "./MakeupTok/./MakeupTok.csproj"
+COPY ["QuakeAnalitika/QuakeAnalitika.csproj", "QuakeAnalitika/"]
+RUN dotnet restore "./QuakeAnalitika/./QuakeAnalitika.csproj"
 COPY . .
-WORKDIR "/src/MakeupTok"
-RUN dotnet build "./MakeupTok.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/QuakeAnalitika"
+RUN dotnet build "./QuakeAnalitika.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./MakeupTok.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./QuakeAnalitika.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MakeupTok.dll"]
+ENTRYPOINT ["dotnet", "QuakeAnalitika.dll"]

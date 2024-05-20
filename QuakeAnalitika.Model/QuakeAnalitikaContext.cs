@@ -12,8 +12,7 @@ public class QuakeAnalitikaContext : DbContext
     public string DbPath { get; }
 
     public DbSet<User> Users { get; set; }
-    public DbSet<Makeup> Makeups { get; set; }
-    public DbSet<MakeupStep> MakeupStep { get; set; }
+    public DbSet<Report> Reports { get; set; }
 
     /// <summary>
     /// Default c-tor

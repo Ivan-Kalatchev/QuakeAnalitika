@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuakeAnalitika.Model;
 
+[Table("Users")]
 public class User
 {
 
@@ -28,9 +24,5 @@ public class User
 
     [Required]
     public string Password { get; set; }
-
-    public string ProfileImage { get; set; }
-
-    public IEnumerable<Makeup> Makeups { get; set; }
 
 }

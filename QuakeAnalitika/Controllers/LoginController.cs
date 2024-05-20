@@ -54,6 +54,22 @@ public class LoginController : Controller
     }
 
     /// <summary>
+    /// View for login.
+    /// 
+    /// GET: /register
+    /// </summary>
+    /// <returns></returns>
+    [ApiExplorerSettings(IgnoreApi = true)]
+    [HttpGet("/register")]
+    public IActionResult Register()
+    {
+        if (!string.IsNullOrEmpty(User?.Identity?.Name))
+            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
+        return View("Register");
+    }
+
+
+    /// <summary>
     /// Logs the user and sets future needed cookies.
     /// 
     /// POST: /login/login
@@ -78,7 +94,7 @@ public class LoginController : Controller
         // cookies
         var claims = new List<Claim> {
             new Claim(ClaimTypes.Name, cred.UserName),
-            new Claim("UserId", cred.UserName),
+            new Claim("UserId", usr.Id.ToString())
         };
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), new AuthenticationProperties { });

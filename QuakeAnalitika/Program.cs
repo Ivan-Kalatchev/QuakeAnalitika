@@ -1,7 +1,7 @@
 using FluentValidation;
-using MakeupTok.Model;
-using MakeupTok.Model.MappingProfiles;
+using QuakeAnalitika.Model.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using QuakeAnalitika.Model;
 using QuakeAnalitika.Model.Open.Validation;
 using QuakeAnalitika.Services;
 using QuakeAnalitika.Services.Generic;
@@ -21,17 +21,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<IMakeupRepository, MakeupRepository>();
+builder.Services.AddTransient<IReportRepository, ReportRepository>();
 
 builder.Services.AddAutoMapper(bld =>
 {
-    bld.AddProfile(new MakeupTokInternalProfile());
+    bld.AddProfile(new QuakeAnalitikaInternalProfile());
 });
 
-builder.Services.AddDbContext<MakeupTokContext>();
+builder.Services.AddDbContext<QuakeAnalitikaContext>();
+using var cont = new QuakeAnalitikaContext();
+cont.Database.EnsureCreated();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CredentialsValidator>();
-builder.Services.AddValidatorsFromAssemblyContaining<MakeupTok.Model.Validation.UserValidator>();
 
 var app = builder.Build();
 

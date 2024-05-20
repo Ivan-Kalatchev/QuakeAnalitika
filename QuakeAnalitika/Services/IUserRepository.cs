@@ -1,4 +1,4 @@
-﻿using MakeupTok.Model;
+﻿using QuakeAnalitika.Model;
 
 namespace QuakeAnalitika.Services;
 

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using QuakeAnalitika.Model.Open;
 
 namespace QuakeAnalitika.Model.Open.Validation;
 
@@ -12,7 +13,6 @@ public class UserValidator : AbstractValidator<UserEditDto>
     {
         RuleFor(procedure => procedure.Email).NotNull().NotEmpty().MinimumLength(10).MaximumLength(60);
         RuleFor(procedure => procedure.Password).NotNull().NotEmpty().MinimumLength(10).MaximumLength(50);
-        RuleFor(procedure => procedure.ProfileImage).NotNull().NotEmpty().MinimumLength(50);
     }
 
 }

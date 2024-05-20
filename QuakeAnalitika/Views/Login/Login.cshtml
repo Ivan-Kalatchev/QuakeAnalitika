@@ -69,13 +69,6 @@
     </v-dialog>
 </v-container>
 
-<input value="@Url.Action("Index", "Home")" id="homeUrl" style="display: none;" />
-<input value="@Url.Action("Login", "Login")" id="loginUrl" style="display: none;" />
-<input value="@(Environment.GetEnvironmentVariable("IsDev"))" id="isDev" style="display: none;" />
-
 @section Scripts {
     <script src="~/js/login.js"></script>
-    <environment include="Development">
-        <script src="~/js/loginDev.js"></script>
-    </environment>
 }

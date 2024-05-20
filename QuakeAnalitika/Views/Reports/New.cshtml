@@ -1,15 +1,29 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "New";
 }
 
+
+
 <v-row>
-    <v-col cols="12">
-        <l-map style="height: 90vh" :zoom="zoom" :center="center">
+    <v-col>
+        <v-slider hint="Im a hint" v-model="amount" max="5" min="1"></v-slider>
+    </v-col>
+</v-row>
+
+<v-row>
+    <v-col>
+        <l-map style="height: 400px" :zoom="zoom" :center="center" @@ready="onMapReady">
             <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker v-for="marker in markers" :lat-lng="[marker.lat, marker.lang]">
-                <l-popup :content="`${marker.amount}`" />
-            </l-marker>
+            <l-marker :lat-lng="marker"></l-marker>
         </l-map>
+    </v-col>
+</v-row>
+
+<v-row>
+    <v-col>
+        <v-btn color="blue" text block @@click="save">
+            Save
+        </v-btn>
     </v-col>
 </v-row>
 <v-dialog v-model="errDialog" max-width="600">
@@ -33,7 +47,6 @@
     </v-card>
 </v-dialog>
 
-
 @section Scripts {
-    <script src="~/js/home.js"></script>
+    <script src="~/js/new.js"></script>
 }

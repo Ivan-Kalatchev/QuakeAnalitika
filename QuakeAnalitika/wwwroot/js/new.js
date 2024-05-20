@@ -1,4 +1,5 @@
-﻿Vue.component('l-map', window.Vue2Leaflet.LMap);
+﻿
+Vue.component('l-map', window.Vue2Leaflet.LMap);
 Vue.component('l-tile-layer', window.Vue2Leaflet.LTileLayer);
 Vue.component('l-marker', window.Vue2Leaflet.LMarker);
 Vue.component('l-popup', window.Vue2Leaflet.LPopup);
@@ -7,35 +8,40 @@ var app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
     data: {
-        isLoading: false,
+
+        marker: [42.09822241118974, 27.641601562500004],
+        amount: 1,
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
             '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         zoom: 6,
         center: [42, 25],
-        markers: [],
-        errText: "",
-        errDialog: false
-    },
-    mounted() {
-        this.getNext();
+
+        // do show the login error dialog
+        errDialog: false,
+        // error message
+        errText: null,
+
     },
     methods: {
 
-        getNext() {
+        onMapReady(map) {
+            map.on('click', app.addMarker)
+        },
+
+        addMarker(e) {
+            this.marker = [e.latlng.lat, e.latlng.lng];
+        },
+
+        save() {
             try {
-                this.isLoading = true;
-                axios.get("/api/reports")
+                axios.post("/api/reports", { "lat": app.marker[0], "lang": app.marker[1], "amount": app.amount })
                     .then(function (response) {
-                        if (response.data[0]) app.markers = response.data;
-                        else app.markers = [];
+                        window.location.href = "/home";
                     })
                     .catch(function (err) {
                         app.errText = err.response.data;
                         app.errDialog = true;
-                    })
-                    .then(function () {
-                        app.isLoading = false;
                     });
             }
             // Something went horrablly wrong!
@@ -45,6 +51,5 @@ var app = new Vue({
                 this.errDialog = true;
             }
         }
-
     }
 })

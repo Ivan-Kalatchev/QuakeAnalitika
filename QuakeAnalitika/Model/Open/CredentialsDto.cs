@@ -14,6 +14,11 @@ public class CredentialsDto
     public string UserName { get; set; } = string.Empty;
 
     /// <summary>
+    /// User's defined username
+    /// </summary>
+    public string Email { get; set; } = string.Empty;
+
+    /// <summary>
     /// User's password
     /// </summary>
     public string Password { get; set; } = string.Empty;

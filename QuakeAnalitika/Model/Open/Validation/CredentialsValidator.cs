@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using QuakeAnalitika.Model.Open;
 
 namespace QuakeAnalitika.Model.Open.Validation;
 

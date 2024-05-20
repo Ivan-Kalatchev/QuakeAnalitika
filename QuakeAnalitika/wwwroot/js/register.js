@@ -1,86 +1,51 @@
-var app = new Vue({
+﻿var app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
     data: {
-        makeups: [
-            {
-                author: {
-                    username: "geri"
-                },
-                name: "My Awesome Makeup",
-                steps: [
-                    {
-                        name: "Put on some string",
-                        description: "string string string string string",
-                        icon: "mdi-edit",
-                        color: "red"
-                    },
-                    {
-                        name: "Put on some oranged",
-                        description: "Some awesome description",
-                        icon: "mdi-edit",
-                        color: "orange"
-                    },
-                    {
-                        name: "Put on some green makeups",
-                        description: "Some awesome description 2",
-                        icon: "mdi-car",
-                        color: "green"
-                    }
-                ]
-            },
-            {
-                author: {
-                    username: "ivan"
-                },
-                name: "My not Awesome Makeup",
-                steps: [
-                    {
-                        name: "Put on some string",
-                        description: "string string string string string",
-                        icon: "mdi-edit",
-                        color: "red"
-                    },
-                    {
-                        name: "Put on some oranged",
-                        description: "Some awesome description",
-                        icon: "mdi-edit",
-                        color: "orange"
-                    },
-                    {
-                        name: "Put on some green makeups",
-                        description: "Some awesome description 2",
-                        icon: "mdi-car",
-                        color: "green"
-                    }
-                ]
-            },
-            {
-                author: {
-                    username: "petur"
-                },
-                name: "My not Awesome Makeup",
-                steps: [
-                    {
-                        name: "Put on some string",
-                        description: "string string string string string",
-                        icon: "mdi-edit",
-                        color: "red"
-                    },
-                    {
-                        name: "Put on some oranged",
-                        description: "Some awesome description",
-                        icon: "mdi-edit",
-                        color: "orange"
-                    },
-                    {
-                        name: "Put on some green makeups",
-                        description: "Some awesome description 2",
-                        icon: "mdi-car",
-                        color: "green"
-                    }
-                ]
+        picture: null,
+        pictureBase64: null,
+        isLoading: false,
+        // username
+        user: "",
+        email: "",
+        // password stored in clear text
+        password: "",
+        // do show the login error dialog
+        errDialog: false,
+        // error message
+        errText: null,
+    },
+    watch: {
+        picture(val) {
+            var reader = new FileReader();
+            reader.onloadend = () => app.pictureBase64 = reader.result;
+            reader.readAsDataURL(val);
+        }
+    },
+    methods: {
+        // Authenticate user
+        login() {
+
+            try {
+                this.isLoading = true;
+                axios.post("api/users", { "userName": app.user, "picture": app.pictureBase64, "email": app.email, "password": app.password })
+                    .then(function (response) {
+                       window.location.href = "/";
+                    })
+                    .catch(function (err) {
+                        app.errText = err.response.data;
+                        app.errDialog = true;
+                    })
+                    .then(function () {
+                        app.isLoading = false;
+                    });
             }
-        ]
+            // Something went horrablly wrong!
+            catch (err) {
+                this.isLoading = false;
+                this.errText = "Нещо се обърка!";
+                this.errDialog = true;
+            }
+        }
     }
 })
